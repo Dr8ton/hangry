@@ -6,6 +6,7 @@
     @endforeach
 @endif
 
+{{-- //TODO: message should be temporary --}}
 @if (session('success'))
     <div class="alert alert-success">
         {{session('success')}}
