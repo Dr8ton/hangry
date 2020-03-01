@@ -1,15 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Items</h1>
-    @if(count($items) > 1)
+    @if(count($items) > 0)
+    <div class="list-group">
+
         @foreach($items as $item)
-            <div class="well">
-                <h3><a href="/items/{{$item->id}}">{{$item->title}}</h3></a>
-            <small>Written on {{$item->created_at}}</small>
-            </div>
-            <hr>
+            <li class="list-group-item">{{$item->title}}
+                <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Edit
+                </button>
+            </li>
         @endforeach
+        </div>
     @else
             <p>No items found</p>
     @endif
