@@ -2,9 +2,6 @@
 
 
 @section('content')
-    <div class="jumbotron text-center">
-        <h1> Don't shop hungry</h1> 
-        <p><a href="#" class="btn btn-primary btn-lg"></a>+Add Item</p>
-    </div>
+<h1>index blade</h1> 
 @endsection
 
