@@ -58,7 +58,7 @@ class ItemsController extends Controller
     public function show($id)
     {
         $item = Item::find($id);
-        return view('items.show')->with('post', $post);
+        return view('items.show')->with('item', $item);
     }
 
     /**
