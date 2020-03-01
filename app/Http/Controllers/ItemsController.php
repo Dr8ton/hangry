@@ -40,7 +40,13 @@ class ItemsController extends Controller
             'title' => 'required',
         ]);
 
-        return 123; 
+        //Create new Item
+        $item = new Item; 
+        $item->title = $request->input('title'); 
+        $item->save(); 
+
+        // Redirect
+        return redirect('/items')->with('success', 'New Item Created');
     }
 
     /**
