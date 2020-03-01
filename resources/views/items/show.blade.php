@@ -1,4 +1,4 @@
-@extends('layout.app')  
+@extends('layouts.app')  
 
 @section('content')
     <h1>{{$item->title}}</h1>
