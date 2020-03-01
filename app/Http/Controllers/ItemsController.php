@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Item;
+use Illuminate\Http\Request;
 
 class ItemsController extends Controller
 {
@@ -14,7 +14,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $items = Item:: all(); 
+        $items = Item::all();
         return view('items.index')->with('items', $items);
     }
 
@@ -25,7 +25,7 @@ class ItemsController extends Controller
      */
     public function create()
     {
-        //
+        return view('items.create');
     }
 
     /**
@@ -36,7 +36,11 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+        ]);
+
+        return 123; 
     }
 
     /**
@@ -47,7 +51,7 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        $item =  Item::find($id); 
+        $item = Item::find($id);
         return view('items.show')->with('post', $post);
     }
 
