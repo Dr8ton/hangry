@@ -57,8 +57,7 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        $item = Item::find($id);
-        return view('items.show')->with('item', $item);
+        //
     }
 
     /**
@@ -69,8 +68,8 @@ class ItemsController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
+        $item = Item::find($id);
+        return view('items.edit')->with('item', $item);    }
 
     /**
      * Update the specified resource in storage.
@@ -81,7 +80,17 @@ class ItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+        ]);
+
+        //Create new Item
+        $item = Item::find($id); 
+        $item->title = $request->input('title'); 
+        $item->save(); 
+
+        // Redirect
+        return redirect('/items')->with('success', ' Item Updated');
     }
 
     /**
