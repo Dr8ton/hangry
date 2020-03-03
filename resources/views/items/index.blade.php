@@ -6,8 +6,11 @@
     <div class="list-group">
         @foreach($items as $item)
             <li class="list-group-item">{{$item->title}}
-                <button type="button" class="btn btn-primary danger float-right" >Delete</button>
-                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" data-item-id="{{$item->id}}" data-item-title="{{$item->title}}">Edit</button>
+                    {!!Form::open(['action' => ['ItemsController@destroy', $item->id], 'method' => 'POST', 'class' => 'float-right'])!!}
+                        {{Form::hidden('_method','DELETE')}}
+                        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                    {{Form::close()}}
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" data-item-id="{{$item->id}}" data-item-title="{{$item->title}}">Edit</button>
             </li>
         @endforeach
     </div>

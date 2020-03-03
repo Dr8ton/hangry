@@ -103,6 +103,9 @@ class ItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Item::find($id);
+        $item->delete(); 
+        return redirect('/items')->with('success', ' Item deleted');
+
     }
 }
