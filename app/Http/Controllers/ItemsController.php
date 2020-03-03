@@ -78,13 +78,15 @@ class ItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+
         $this->validate($request, [
             'title' => 'required',
         ]);
 
         //Create new Item
+        $id = $request->input('item-id');
         $item = Item::find($id); 
         $item->title = $request->input('title'); 
         $item->save(); 

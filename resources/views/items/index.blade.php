@@ -6,7 +6,8 @@
     <div class="list-group">
         @foreach($items as $item)
             <li class="list-group-item">{{$item->title}}
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" data-item-id="{{$item->id}}" data-item-title="{{$item->title}}">Edit</button>
+                <button type="button" class="btn btn-primary danger float-right" >Delete</button>
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" data-item-id="{{$item->id}}" data-item-title="{{$item->title}}">Edit</button>
             </li>
         @endforeach
     </div>
@@ -25,17 +26,22 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="/items/update" method="POST">
-                <div class="form-group">
-                  <label for="item-title" class="col-form-label">Recipient:</label>
-                  <input type="text" class="form-control" id="item-title">
-                  <input type="hidden" name="item-id" id="item-id" value="">
-                </div>
-              </form>
+              {!! Form::open(['action' => ['ItemsController@update','test'], 'method' => 'POST']) !!}
+            {{Form::hidden('_method','PUT')}}
+              <div class="form-group">
+                {{Form::label('title','Item')}}
+                {{Form::text('title','', ['class' => 'form-control'])}}
+                <input type="hidden" name="item-id" id="item-id" value="">
+
             </div>
+
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Update item</button>
+             
+              {{Form::submit('Done',['class'=> 'btn btn-primary'])}}
+              {!! Form::close() !!}
+              <button type="button" class="btn btn-primary">Update item</button>
             </div>
           </div>
         </div>
@@ -48,9 +54,11 @@
         var id_value = button.data('item-id') 
         var item_title = button.data('item-title') 
         var modal = $(this)
-        modal.find('.modal-body #item-id').val(id_value)
-        modal.find('.modal-body #item-title').val(item_title)
-})
+        modal.find('#item-id').val(id_value)
+        modal.find('#title').val(item_title)
+    })
+
  </script>
+{{-- end modal --}}
 
 @endsection
