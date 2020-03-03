@@ -3,9 +3,10 @@
 @section('content')
 
     @if(count($items) > 0)
-    <div class="list-group">
+    <div class="list-group sort_menu">
         @foreach($items as $item)
-            <li class="list-group-item">{{$item->title}}
+            <li class="list-group-item" data-id="{{$item->id}}">
+              <span class="handle"></span> {{$item->title}}
                     {!!Form::open(['action' => ['ItemsController@destroy', $item->id], 'method' => 'POST', 'class' => 'float-right'])!!}
                         {{Form::hidden('_method','DELETE')}}
                         {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
@@ -49,7 +50,53 @@
         </div>
       </div>
 
+  <style>
+        .handle {
+          min-width: 18px;
+          background: #607D8B;
+          height: 15px;
+          display: inline-block;
+          cursor: move;
+          margin-right: 10px;
+      }
+
+      .highlight {
+        background: #f7e7d3;
+        min-height: 30px;
+        list-style-type: none;
+    }
+  </style>
+
  <script>
+    $(document).ready(function(){
+
+    	function updateToDatabase(idString){
+    	   $.ajaxSetup({ headers: {'X-CSRF-TOKEN': '{{csrf_token()}}'}});
+    		
+    	   $.ajax({
+              url:'{{url('/list/update-order')}}',
+              method:'POST',
+              data:{ids:idString},
+              success:function(){
+                 alert('Successfully updated')
+               	 //do whatever after success
+              }
+           })
+    	}
+
+        var target = $('.sort_menu');
+        target.sortable({
+            handle: '.handle',
+            placeholder: 'highlight',
+            axis: "y",
+            update: function (e, ui){
+               var sortData = target.sortable('toArray',{ attribute: 'data-id'})
+               updateToDatabase(sortData.join(','))
+            }
+        })
+        
+    })
+
      $('#exampleModal').on('show.bs.modal', function (event) {
          console.log('modal open');
         var button = $(event.relatedTarget) 

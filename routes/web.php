@@ -11,7 +11,6 @@
 |
 */
 Route::redirect('/','/items'); 
-//Route::get('item/index','ItemsController@index');
-Route::post('items/updateorder','ItemsController@updateOrder'); 
-
+Route::get('list/index','ListController@index');
+Route::post('list/update-order','ListController@updateOrder'); 
 Route::resource('items', 'ItemsController');

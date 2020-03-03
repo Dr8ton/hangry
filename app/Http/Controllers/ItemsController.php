@@ -78,6 +78,21 @@ class ItemsController extends Controller
     }
 
     public function show(Request $request){
+        // debug_to_console($request->all());
+        // if($request->has('ids')){
+        //     $arr = explode(',',$request->input('ids'));
+            
+        //     foreach($arr as $sortOrder => $id){
+        //         $item = Item::find($id);
+        //         $item->sort_id = $sortOrder;
+        //         $item->save();
+        //     }
+        //     return redirect('/items')->with('success', ' Item Updated');
+        // }
+    }
+
+    public function updateorder(Request $request){
+                debug_to_console($request->all());
         if($request->has('ids')){
             $arr = explode(',',$request->input('ids'));
             
@@ -102,5 +117,14 @@ class ItemsController extends Controller
         $item->delete(); 
         return redirect('/items')->with('success', ' Item deleted');
 
+    }
+
+// TODO: delete this function 
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 }
