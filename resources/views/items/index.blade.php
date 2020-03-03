@@ -44,7 +44,6 @@
              
               {{Form::submit('Done',['class'=> 'btn btn-primary'])}}
               {!! Form::close() !!}
-              <button type="button" class="btn btn-primary">Update item</button>
             </div>
           </div>
         </div>
