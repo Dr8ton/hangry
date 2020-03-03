@@ -6,9 +6,7 @@
     <div class="list-group">
         @foreach($items as $item)
             <li class="list-group-item">{{$item->title}}
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" data-title="{{$item->title}}" data-id="{{$item->id}}">
-                    Edit                  
-                </button>
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" data-dog="{{$item->id}}">Edit</button>
             </li>
         @endforeach
     </div>
@@ -16,51 +14,47 @@
             <p>No items found</p>
     @endif
 
-    {{-- Modal --}}
-
-    <div class="modal" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{-- Modal --}}
+    <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">New message</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-                <div class="container text-center">
-                    {!! Form::open(['action' => ['ItemsController@update', $item->id], 'method' => 'POST']) !!}
-                    
-                    <div class="form-group">
-                        {{Form::label('title','Edit Item')}}
-                        {{Form::text('title', $item->title , ['class' => 'form-control'])}}
-                        {{-- //TODO:  don't want this so wide. 'wide as the google bar per the wife' --}}
-                    </div>
-                
-                    {{Form::hidden('_method','PUT')}}
-
-                </div>           
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              {{Form::submit('Save Changes',['class'=> 'btn btn-primary'])}}
-              {!! Form::close() !!}
-              {{-- <button type="submit" class="btn btn-primary">Save changes</button> --}}
+              <button type="button" class="btn btn-primary">Send message</button>
             </div>
           </div>
         </div>
       </div>
-    
 
-    <script>
-        $('#exampleModal').on('show.bs.modal', function (event) {
+ <script>
+     $('#exampleModal').on('show.bs.modal', function (event) {
+         console.log('modal open');
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('dog') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+})
+ </script>
 
-            var button = $(event.relatedTarget) 
-            var title = button.data('title')
-            console.log(title)
-            var modal = $(this)
-
-            modal.find('.modal-body #title').val(title)   
-        })
-    </script>  
 @endsection
