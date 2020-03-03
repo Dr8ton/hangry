@@ -14,8 +14,8 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
-        return view('items.index')->with('items', $items);
+        $items = Item::orderBy('sort_id','asc')->get();
+        return view('items.index',compact('items'));
     }
 
     /**
@@ -48,7 +48,8 @@ class ItemsController extends Controller
     public function edit($id)
     {
         $item = Item::find($id);
-        return view('items.edit')->with('item', $item);    }
+        return view('items.edit')->with('item', $item);   
+    }
 
     /**
      * Update the specified resource in storage.
@@ -73,6 +74,8 @@ class ItemsController extends Controller
         // Redirect
         return redirect('/items')->with('success', ' Item Updated');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
