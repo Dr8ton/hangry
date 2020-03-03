@@ -14,8 +14,10 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
-        return view('items.index')->with('items', $items);
+        $items = Item::orderBy('sort_id','asc')->get();
+        return view('items.index',compact('items'));
+        // $items = Item::all();
+        // return view('items.index')->with('items', $items);
     }
 
     /**
@@ -48,7 +50,8 @@ class ItemsController extends Controller
     public function edit($id)
     {
         $item = Item::find($id);
-        return view('items.edit')->with('item', $item);    }
+        return view('items.edit')->with('item', $item);   
+    }
 
     /**
      * Update the specified resource in storage.
@@ -72,6 +75,19 @@ class ItemsController extends Controller
 
         // Redirect
         return redirect('/items')->with('success', ' Item Updated');
+    }
+
+    public function updateOrder(Request $request){
+        if($request->has('ids')){
+            $arr = explode(',',$request->input('ids'));
+            
+            foreach($arr as $sortOrder => $id){
+                $menu = Menu::find($id);
+                $menu->sort_id = $sortOrder;
+                $menu->save();
+            }
+            return ['success'=>true,'message'=>'Updated'];
+        }
     }
 
     /**
