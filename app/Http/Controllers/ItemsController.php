@@ -77,16 +77,16 @@ class ItemsController extends Controller
         return redirect('/items')->with('success', ' Item Updated');
     }
 
-    public function updateOrder(Request $request){
+    public function show(Request $request){
         if($request->has('ids')){
             $arr = explode(',',$request->input('ids'));
             
             foreach($arr as $sortOrder => $id){
-                $menu = Menu::find($id);
-                $menu->sort_id = $sortOrder;
-                $menu->save();
+                $item = Item::find($id);
+                $item->sort_id = $sortOrder;
+                $item->save();
             }
-            return ['success'=>true,'message'=>'Updated'];
+            return redirect('/items')->with('success', ' Item Updated');
         }
     }
 
