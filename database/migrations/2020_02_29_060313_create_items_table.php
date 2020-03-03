@@ -16,7 +16,7 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('sort_id');
+            $table->integer('sort_id')->default(1000);
             $table->timestamps();
         });
     }
