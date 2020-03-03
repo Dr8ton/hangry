@@ -19,7 +19,6 @@
       @include('inc.navbar')
       @include('inc.banner')
       <div class="container">  
-        @include('inc.messages')
         @yield('content')
       </div>
       <div class="container">
